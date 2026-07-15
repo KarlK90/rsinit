@@ -259,7 +259,7 @@ impl<'a> InitContext<'a> {
             write!(buf, "{} ", arg.to_bytes().escape_ascii())?;
         }
         writeln!(buf, "...")?;
-        info!("{}", &buf);
+        info!("{}", buf);
 
         execv(&args[0], &args)?;
 
