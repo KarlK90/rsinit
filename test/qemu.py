@@ -34,15 +34,18 @@ class RuntimeStatus:
             self._system_status = result.pop(-1)
             self.mountinfo = self._system_status["mountinfo"]
             self.block_devices = self._system_status.get("block-devices")
+            self.root_mount = self._system_status.get("root-mount")
         else:
             self._system_status = None
             self.mountinfo = None
             self.block_devices = None
+            self.root_mount = None
         self.rsinit_messages = result
 
     def assert_system_state(self):
         assert self.mountinfo, "Missing /proc/self/mountinfo data"
         assert self.block_devices, "Missing /sys/dev/block data"
+        assert self.root_mount is True, "Invalid root mount"
 
     def get_mount(self, *, mount_point=None, filesystem_type=None):
         assert self.mountinfo, "missing mountinfo data"
