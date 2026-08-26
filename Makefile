@@ -15,7 +15,7 @@ else
 	CARGO_FLAGS		?=
 endif
 
-default-target-list	:= aarch64-unknown-linux-musl arm-unknown-linux-musleabihf x86_64-unknown-linux-musl
+default-target-list	:= aarch64-unknown-linux-musl arm-unknown-linux-musleabihf armv5te-unknown-linux-musleabi x86_64-unknown-linux-musl
 
 all: check-toolchain build cpio
 build: $(addsuffix -build,$(default-target-list))
