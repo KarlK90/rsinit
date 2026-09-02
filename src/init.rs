@@ -264,6 +264,7 @@ impl<'a> InitContext<'a> {
         )
     }
 
+    #[allow(unreachable_code)]
     pub fn start_init(self: &InitContext<'a>) -> Result<()> {
         let mut args = Vec::new();
         args.push(CString::new(self.options.init.as_str())?);
@@ -281,7 +282,7 @@ impl<'a> InitContext<'a> {
 
         execv(&args[0], &args)?;
 
-        Ok(())
+        Ok(()) // Actually unreachable
     }
 
     pub fn finish(self: &mut InitContext<'a>) -> Result<()> {
