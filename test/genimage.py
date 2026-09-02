@@ -170,10 +170,10 @@ image {name} {{
             for line in output:
                 try:
                     key, value = line.split(":", 1)
+                    value = value.strip().partition(" ")[0]
                 except ValueError:
                     continue
                 key = "VERITY_" + key.strip().upper().replace(" ", "_")
-                value = value.strip()
                 verity_config.write(f"{key}={value}\n")
             verity_config.write(f"VERITY_DATA_SECTORS={int(size / 512)}\n")
             return verity_params
