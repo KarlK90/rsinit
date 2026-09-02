@@ -23,6 +23,10 @@ KERNEL_AARCH64_URL = None
 KERNEL_AARCH64_SHA256 = None
 
 
+class ChecksumError(Exception):
+    """Raised when a downloaded file does not match its expected sha256."""
+
+
 class RuntimeStatus:
     def __init__(self, result):
         result = [json.loads(block) for block in result.split("\0") if block]
@@ -104,7 +108,7 @@ class Qemu:
         with open(file, "rb") as f:
             digest = hashlib.file_digest(f, "sha256")
         if digest.hexdigest() != sha256:
-            raise Exception(
+            raise ChecksumError(
                 f"sha256 for {file} does not match: {digest.hexdigest()} != {sha256} (expected)"
             )
 
@@ -166,7 +170,7 @@ class Qemu:
                 "-device",
                 "virtserialport,chardev=rsinit,name=rsinit.result.0",
             ]
-            subprocess.run(args)
+            subprocess.run(args, check=False)
             return RuntimeStatus(result.read())
 
 

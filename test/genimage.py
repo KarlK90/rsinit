@@ -58,7 +58,7 @@ class GenImage:
             ]
             if root:
                 args += ["--root", root.name]
-            subprocess.run(args, env=self._sbin_env()).check_returncode()
+            subprocess.run(args, env=self._sbin_env(), check=True)
 
     def __image_file(self, name):
         return self.__image_path / name
